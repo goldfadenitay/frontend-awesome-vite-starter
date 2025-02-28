@@ -1,12 +1,23 @@
+import styles from './counter.module.css';
+import './postcss.css';
+
 export const initializeCounter = (doc = globalThis.document) => {
   const countElement = doc.getElementById('count');
   const incrementButton = doc.getElementById('increment');
   const decrementButton = doc.getElementById('decrement');
 
+  countElement.classList.add(styles.count);
+
   let count = 0;
 
   const render = () => {
     countElement.textContent = count;
+
+    if (count < 0) {
+      import('./banner.ts').then(({ addBanner }) =>
+        addBanner('Count is negative'),
+      );
+    }
   };
 
   const increment = () => {
